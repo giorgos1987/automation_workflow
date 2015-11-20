@@ -1,0 +1,30 @@
+#/var/spool/cron/crontabs
+
+3 * * * * /bin/sh /home/workflow/dataflows/010ingestion/scripts/OEORGANICEPRINTS/test_write.sh  > /dev/null 2>&1
+#run every 1 minutes 0,3,6,7,8,9 * * * * /bin/sh /home/workflow/dataflows/010ingestion/scripts/OEORGANICEPRINTS/test_write.sh  > /dev/null 2>&1
+
+
+#ingestion
+30 18 22 * * /bin/sh /home/workflow/dataflows/010ingestion/scripts/OEORGANICEPRINTS/CRON_scripts/step010ingestion.sh > /dev/null 2>&1
+
+#simple transfer
+33 18 22 * * /bin/sh /home/workflow/dataflows/010ingestion/scripts/OEORGANICEPRINTS/CRON_scripts/step020filtering.sh > /dev/null 2>&1
+#identify  duplicates
+#37 18 22 * * /bin/sh /home/workflow/dataflows/010ingestion/scripts/OEORGANICEPRINTS/CRON_scripts/step030identification.sh > /dev/null 2>&1
+#step030FindDif.sh
+34 18 22 * * /bin/sh /home/workflow/dataflows/010ingestion/scripts/OEORGANICEPRINTS/CRON_scripts/#step030FindDif.sh > /dev/null 2>&1
+
+
+#transform lom to akif
+35 18 22 * * /bin/sh /home/workflow/dataflows/010ingestion/scripts/OEORGANICEPRINTS/CRON_scripts/step040transformation.sh > /dev/null 2>&1
+
+
+#transfering json files to 5_postprocessed
+38 18 22 * * /bin/sh /home/workflow/dataflows/010ingestion/scripts/OEORGANICEPRINTS/CRON_scripts/step050postprocessing.sh > /dev/null 2>&1
+
+#transfering json files to remote server
+43 18 22 * * /bin/sh /home/workflow/dataflows/010ingestion/scripts/OEORGANICEPRINTS/CRON_scripts/step500publication.sh > /dev/null 2>&1
+
+
+#indexing files
+45 18 22 * * /bin/sh /home/workflow/dataflows/010ingestion/scripts/OEORGANICEPRINTS/CRON_scripts/step600indexing.sh > /dev/null 2>&1
